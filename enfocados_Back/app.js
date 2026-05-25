@@ -5,6 +5,7 @@ const express = require('express');
 const cors = require('cors');
 const articulosRoutes = require('./routes/articulos');
 const movimientosRoutes = require('./routes/movimientos');
+const despachosRoutes = require('./routes/despachos');
 const authRoutes = require('./routes/auth');
 
 const app = express();
@@ -17,6 +18,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/articulos', articulosRoutes);
 app.use('/api/movimientos', movimientosRoutes);
+app.use('/api/despachos', despachosRoutes);
 app.use('/api/auth', authRoutes);
 
 app.use((err, req, res, next) => {

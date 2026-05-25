@@ -9,10 +9,9 @@ Aplicación frontend React + Tailwind para un sistema interno de stock en depós
 - `package.json` — dependencias y scripts.
 
 ## Endpoints esperados
-- `GET /api/stock` — lista de artículos.
-- `POST /api/stock/ingreso` — crear o reponer stock.
-- `POST /api/stock/estuches` — crear estuche.
-- `POST /api/stock/salida` — registrar salida.
+- `GET /api/articulos` — lista de artículos e inventario.
+- `POST /api/movimientos` — registra entradas, salidas y ensamblajes.
+- `POST /api/auth/login` (implícito) — autenticación de usuario.
 
 ## Cómo ejecutar
 1. Instalar dependencias:

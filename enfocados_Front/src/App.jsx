@@ -65,7 +65,7 @@ function App() {
   async function fetchInventory() {
     setLoading(true);
     try {
-      const response = await api.get('/api/articulos');
+      const response = await api.get('/articulos');
       setInventory(response.data || []);
     } catch (error) {
       console.error(error);
@@ -90,7 +90,7 @@ function App() {
 
     try {
       setLoading(true);
-      await api.post('/api/movimientos', {
+      await api.post('/movimientos', {
         id_articulo: ingreso.itemId,
         tipo_movimiento: 'entrada',
         cantidad: ingreso.quantity,
@@ -121,7 +121,7 @@ function App() {
       // Asumiendo que el ensamblaje también se registra como movimiento o tiene endpoint propio
       // Si es un producto nuevo, podrías necesitar crear el artículo primero.
       // Aquí simulamos un ensamblaje si el backend lo permite vía /movimientos o similar.
-      await api.post('/api/movimientos', {
+      await api.post('/movimientos', {
         nombre_nuevo_articulo: estuche.name.trim(),
         tipo_movimiento: 'ensamblaje',
         componentes: validComponents,
@@ -148,9 +148,8 @@ function App() {
 
     try {
       setLoading(true);
-      await api.post('/api/movimientos', {
+      await api.post('/despachos', {
         id_articulo: salida.itemId,
-        tipo_movimiento: 'salida',
         cantidad: salida.quantity,
         motivo: salida.motivo
       });

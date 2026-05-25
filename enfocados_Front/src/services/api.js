@@ -1,11 +1,24 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://straining-fiscally-regulator.ngrok-free.dev',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000/api',
   headers: {
-    'ngrok-skip-browser-warning': 'true',
     'Content-Type': 'application/json',
   },
 });
+
+// Interceptor para incluir el token JWT en las peticiones
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export default api;

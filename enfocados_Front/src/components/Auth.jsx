@@ -18,7 +18,7 @@ export default function Auth({ onLoginSuccess }) {
     setLoading(true);
 
     // Endpoints relativos a la baseURL con prefijo /api
-    const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
+    const endpoint = isLogin ? '/auth/login' : '/auth/register';
     const payload = isLogin 
       ? { email: formData.email, password: formData.password }
       : { nombre: formData.nombre, email: formData.email, password: formData.password };

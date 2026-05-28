@@ -1,34 +1,13 @@
-version: '3.8'
+# NOTA: Este archivo es histórico y ya NO se usa.
+# El proyecto ahora funciona con XAMPP en lugar de Docker.
+# Ver SETUP-XAMPP.md para las instrucciones de configuración actual.
 
-services:
-  db:
-    image: mysql:8.0
-    container_name: enf_mysql_db
-    restart: always
-    environment:
-      MYSQL_DATABASE: deposito_enfocadosmza
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-    ports:
-      - "3307:3306"
-    volumes:
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - enf_db_data:/var/lib/mysql
-
-  app:
-    build: .
-    container_name: enf_backend_api
-    restart: always
-    ports:
-      - "3001:3000" # Cambiado a 3001 para que no choque con tu 'npm run dev' local
-    environment:
-      - DB_HOST=db
-      - DB_USER=root
-      - DB_PASSWORD=
-      - DB_NAME=deposito_enfocadosmza
-      - PORT=3000
-      - JWT_SECRET=clave_secreta_enfocados_2024
-    depends_on:
-      - db
-
-volumes:
-  enf_db_data:
+# Contenido anterior (solo para referencia):
+# version: '3.8'
+# services:
+#   db:
+#     image: mysql:8.0
+#     ...
+#   app:
+#     build: .
+#     ...

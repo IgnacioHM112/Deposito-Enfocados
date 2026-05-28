@@ -16,7 +16,7 @@ API robusta para la gestión de inventario, control de materias primas y product
 - **Backend:** Node.js, Express.js
 - **Base de Datos:** MySQL 8.0
 - **Autenticación:** JSON Web Tokens (JWT)
-- **Contenedores:** Docker, Docker Compose
+- **Servidor Local:** XAMPP (Apache, MySQL, PHP)
 - **Túnel de Desarrollo:** ngrok
 
 ## 📦 Estructura de la Base de Datos
@@ -30,22 +30,23 @@ El sistema utiliza un esquema relacional optimizado:
 ## 🛠️ Instalación y Uso
 
 ### Requisitos previos
-- Docker & Docker Compose
+- XAMPP instalado ([Descargar](https://www.apachefriends.org/))
 - Node.js (v18+)
+- npm
 
-### Con Docker (Recomendado)
-1. Clonar el repositorio.
-2. Ejecutar:
-   ```bash
-   docker-compose up --build -d
-   ```
-3. La API estará disponible en `http://localhost:3000`.
-4. El MySQL estará disponible en `localhost:3307`.
+### Configuración Rápida con XAMPP
+1. Instalar dependencias: `npm install`
+2. Iniciar MySQL en XAMPP Panel Control
+3. Importar base de datos: 
+   - Opción A: Usar phpMyAdmin en `http://localhost/phpmyadmin`
+   - Opción B: Ejecutar `mysql -u root < db/init.sql`
+4. Ejecutar servidor: `npm run dev` (desarrollo) o `npm start` (producción)
+5. API disponible en `http://localhost:3000`
 
-### Desarrollo Local
-1. Instalar dependencias: `npm install`.
-2. Configurar el archivo `.env` basado en `.env.example`.
-3. Ejecutar: `npm run dev`.
+**⚠️ Nota:** El archivo `.env` ya contiene la configuración para XAMPP. Ver [SETUP-XAMPP.md](./SETUP-XAMPP.md) para instrucciones detalladas.
+
+### Alternativa: Con Docker (Legacy)
+Si deseas usar Docker, ver el archivo `docker-compose.yml` (deprecated).
 
 ## 🌐 Endpoints Principales
 

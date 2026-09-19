@@ -35,7 +35,7 @@ export default function Auth({ onLoginSuccess }) {
       
       onLoginSuccess(data.user || data);
     } catch (err) {
-      setError(err.response?.data?.message || 'Credenciales incorrectas. Intenta de nuevo.');
+      setError(err.response?.data?.error || 'Credenciales incorrectas. Intenta de nuevo.');
     } finally {
       setLoading(false);
     }
@@ -128,7 +128,7 @@ export default function Auth({ onLoginSuccess }) {
           >
             {isLogin 
               ? '¿No tienes cuenta? Crea una ahora' 
-              : '¿Ya tienes cuenta? Inicia sesión'}
+              : '¿Ya tienes cuenta? Iniciamos sesión'}
           </button>
         </div>
       </div>

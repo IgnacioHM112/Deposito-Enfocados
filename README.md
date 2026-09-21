@@ -1,48 +1,79 @@
 # 📦 Sistema de Control de Depósito - Enfocados MZA
 
-Este repositorio contiene la solución integral para la gestión de inventario y stock de **Enfocados MZA**. El sistema está compuesto por un backend robusto en Node.js y un frontend moderno desarrollado en React.
+Sistema integral para la gestión de inventario y stock de **Enfocados MZA**. Compuesto por un backend REST en Node.js/Express con MySQL y un frontend moderno en React + Tailwind CSS, con soporte para trazabilidad real de materias primas, productos terminados (kits) y despachos.
 
 ---
 
 ## 🏗️ Arquitectura del Proyecto
 
-El proyecto está organizado en una estructura de monorepo:
+Estructura de monorepo:
 
-- **[`enfocados_Back/`](./enfocados_Back)**: API REST desarrollada con Node.js, Express y MySQL. Incluye soporte para Docker y gestión de base de datos.
-- **[`enfocados_Front/`](./enfocados_Front)**: Dashboard administrativo desarrollado con React, Vite y Tailwind CSS.
-
----
-
-## 🚀 Características Principales
-
-- **Gestión de Artículos:** Control total sobre materias primas y productos terminados.
-- **Sistema de Kits (Composiciones):** Definición dinámica de productos compuestos y procesos de ensamblaje.
-- **Control de Movimientos:** Registro histórico detallado de entradas, salidas, ensamblajes y ajustes.
-- **Trazabilidad en Tiempo Real:** Actualización automática del stock ante cualquier movimiento detectado.
-- **Autenticación Segura:** Sistema de acceso protegido mediante JWT (JSON Web Tokens) y encriptación de contraseñas.
-- **Interfaz Responsiva:** Dashboard moderno diseñado para una gestión rápida y eficiente.
+```
+Deposito-Enfocados/
+├── enfocados_Back/     → API REST (Node.js, Express, MySQL)
+└── enfocados_Front/    → Dashboard administrativo (React, Vite, Tailwind)
+```
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+## 🚀 Características
 
 ### Backend
-- **Lenguaje:** Node.js (v18+)
-- **Framework:** Express.js
-- **Base de Datos:** MySQL 8.0
-- **Seguridad:** JWT, BcryptJS
-- **Infraestructura:** Docker & Docker Compose
+- **Gestión de Artículos:** materias primas y productos terminados.
+- **Sistema de Kits:** composición dinámica (1 kit = N componentes).
+- **Control de Movimientos:** entradas, salidas, ensamblajes y ajustes con actualización de stock en tiempo real.
+- **Autenticación Segura:** usuarios con `bcryptjs` y sesiones `JWT`.
+- **Infraestructura Docker:** listo para desarrollo y producción con Docker Compose.
 
 ### Frontend
-- **Librería Principal:** React 18
-- **Estilos:** Tailwind CSS
-- **Herramienta de Construcción:** Vite
-- **Peticiones HTTP:** Axios
-- **Iconos:** Lucide React
+- **Dashboard administrativo** con pestañas para inventario, ingreso de stock, configuración de estuches y despachos.
+- **Formularios dinámicos** con cálculo de unidades totales.
+- **Alertas de stock** para faltantes y validaciones.
+- **Interfaz responsiva** pensada para uso diario en el depósito.
 
 ---
 
-## ⚙️ Configuración e Instalación
+## 🛠️ Tecnologías
+
+### Backend
+| Tecnología | Uso |
+|------------|-----|
+| Node.js (v18+) | Runtime |
+| Express.js | Framework web |
+| MySQL 8.0 | Base de datos |
+| JWT | Autenticación |
+| BcryptJS | Encriptación de contraseñas |
+| Docker & Docker Compose | Infraestructura |
+
+### Frontend
+| Tecnología | Uso |
+|------------|-----|
+| React 18 | Librería principal |
+| Vite | Herramienta de construcción |
+| Tailwind CSS | Estilos |
+| Axios | Peticiones HTTP |
+| Lucide React | Iconos |
+
+---
+
+## 🗄️ Base de Datos
+
+Esquema relacional optimizado:
+
+| Tabla | Descripción |
+|-------|-------------|
+| `articulos` | Información maestra y stock actual |
+| `composicion_kits` | Componentes de productos terminados |
+| `movimientos` | Historial de transacciones de inventario |
+| `usuarios` | Gestión de acceso administrativo |
+
+---
+
+## ⚙️ Instalación
+
+### Requisitos previos
+- Node.js (v18+) y npm
+- Docker Desktop (para la base de datos y/o backend)
 
 ### 1. Clonar el repositorio
 ```bash
@@ -50,60 +81,93 @@ git clone https://github.com/tu-usuario/Deposito-Enfocados.git
 cd Deposito-Enfocados
 ```
 
-### 2. Configurar Variables de Entorno
-Debes configurar los archivos `.env` tanto en el backend como en el frontend basándote en los archivos `.env.example` proporcionados.
+### 2. Configurar variables de entorno
 
-#### Backend (`enfocados_Back/.env`):
+Copiar los `.env.example` y ajustar:
+
+**Backend** (`enfocados_Back/.env`):
 ```env
 PORT=3000
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=tu_password
-DB_NAME=enfocados_db
+DB_HOST=127.0.0.1
 DB_PORT=3306
-JWT_SECRET=tu_secreto_super_seguro
+DB_USER=root
+DB_PASSWORD=
+DB_NAME=deposito_enfocadosmza
+JWT_SECRET=tu_clave_secreta_aqui
+NODE_ENV=development
 ```
 
-#### Frontend (`enfocados_Front/.env`):
+**Frontend** (`enfocados_Front/.env`):
 ```env
-VITE_API_URL=http://localhost:3000
+VITE_API_URL=http://localhost:3000/api
 ```
+
+> 💡 **Nota:** `DB_PORT` debe coincidir con el puerto expuesto por el contenedor MySQL de Docker (ver `docker-compose.yml` en `enfocados_Back/`). `VITE_API_URL` debe apuntar al puerto donde corre el backend.
 
 ---
 
 ## 🏃 Cómo Ejecutar
 
-### Opción A: Usando Docker (Recomendado para Backend)
-Dentro de la carpeta `enfocados_Back/`:
-```bash
-docker-compose up --build -d
-```
-Esto levantará la API y la base de datos MySQL automáticamente.
+### Opción A: Todo manual (desarrollo)
 
-### Opción B: Ejecución Manual
-
-#### Levantar el Backend:
+**Backend:**
 ```bash
 cd enfocados_Back
 npm install
 npm run dev
 ```
 
-#### Levantar el Frontend:
+**Frontend (en otra terminal):**
 ```bash
 cd enfocados_Front
 npm install
 npm run dev
 ```
 
+### Opción B: Backend con Docker
+```bash
+cd enfocados_Back
+docker-compose up --build -d
+```
+Esto levanta la API y la base de datos MySQL automáticamente.
+
 ---
 
-## 🛡️ Endpoints de la API (Resumen)
+## 🌐 Endpoints de la API
 
-- `POST /api/auth/login`: Inicio de sesión y obtención de token.
-- `GET /api/articulos`: Listado de todos los artículos y su stock actual.
-- `POST /api/movimientos`: Registro de nuevos movimientos (Entradas, Salidas, Kits).
+Base URL: `VITE_API_URL` (ejemplo: `http://localhost:3000/api`)
+
+### Autenticación
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| POST | `/auth/login` | Iniciar sesión |
+| POST | `/auth/register` | Crear cuenta |
+
+### Artículos
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| GET | `/articulos` | Listado de artículos e inventario |
+| GET | `/articulos/:id` | Detalle de un artículo (kits incluyen componentes) |
+| POST | `/articulos` | Crear artículo |
+
+### Movimientos
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| POST | `/movimientos` | Registrar entrada, salida o ensamblaje |
+
+### Despachos
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| POST | `/despachos` | Registrar despacho de artículos |
+
+### Autenticación JWT
+El token se almacena en `localStorage` y el interceptor de Axios (`src/services/api.js`) lo incluye automáticamente:
+```
+Authorization: Bearer <token>
+```
 
 ---
+
+## 📄 Licencia
 
 Desarrollado para **Enfocados MZA**. 🚀
